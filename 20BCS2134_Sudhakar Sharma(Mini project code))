@@ -1,0 +1,39 @@
+import random
+
+class Advertiser:
+    def _init_(self, name, budget):
+        self.name = name
+        self.budget = budget
+    
+    def bid(self, bid_request):
+        bid_price = random.uniform(0.1, 1)  # Simulated bid price
+        return bid_price
+
+class BidRequest:
+    def _init_(self, user_demographics):
+        self.user_demographics = user_demographics
+
+class Auction:
+    def _init_(self, advertisers):
+        self.advertisers = advertisers
+    
+    def conduct_auction(self, bid_request):
+        bids = {}
+        for advertiser in self.advertisers:
+            bid_price = advertiser.bid(bid_request)
+            bids[advertiser.name] = bid_price
+        winning_advertiser = max(bids, key=bids.get)
+        return winning_advertiser, bids[winning_advertiser]
+
+# Simulated data
+advertiser1 = Advertiser("Advertiser 1", 100)
+advertiser2 = Advertiser("Advertiser 2", 150)
+advertisers = [advertiser1, advertiser2]
+
+bid_request = BidRequest({"age": 25, "gender": "male", "location": "US"})
+
+auction = Auction(advertisers)
+winner, winning_bid = auction.conduct_auction(bid_request)
+
+print("Winner:", winner)
+print("Winning Bid:", winning_bid)
